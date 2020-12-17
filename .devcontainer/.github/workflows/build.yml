@@ -1,0 +1,21 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build image
+        uses: mamezou-tech/buildpacks-action@master
+        with:
+          image: 'springboot-github-actions'
+          tag: ${{ github.sha }}
+          path: '.'
+          builder: 'paketobuildpacks/apache-tomcat'
